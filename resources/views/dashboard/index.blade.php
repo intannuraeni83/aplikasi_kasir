@@ -37,7 +37,7 @@
 									</svg>
 								</div>
 								<div class="project-content">
-									<h6>Invoices</h6>
+									<h6>Produk</h6>
 									<ul>
 										<li>
 											<strong>Processing</strong>
@@ -70,7 +70,7 @@
 									</svg>
 								</div>
 								<div class="project-content">
-									<h6>Tasks</h6>
+									<h6>Pelanggan</h6>
 									<ul>
 										<li>
 											<strong>Processing</strong>
@@ -100,7 +100,7 @@
 									</svg>
 								</div>
 								<div class="project-content">
-									<h6>Estimates</h6>
+									<h6>Penjualan</h6>
 									<ul>
 										<li>
 											<strong>Processing</strong>
@@ -128,7 +128,7 @@
 									</svg>
 								</div>
 								<div class="project-content">
-									<h6>Revenue</h6>
+									<h6>Detail Penjualan</h6>
 									<ul>
 										<li>
 											<strong>Earnings</strong>

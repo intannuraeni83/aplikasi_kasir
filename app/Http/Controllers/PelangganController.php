@@ -2,65 +2,141 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Pelanggan;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $pelanggan = Pelanggan::all();
         return view('data_pelanggan.index', compact('pelanggan'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
-        return view('data_pelanggan.form_create');
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
+        // VALIDASI UNTUK INPUT DATA PENGGUNA 
         $request->validate([
             'nama_pelanggan' => 'required',
-            'email' => 'required|email|unique:pelanggan,email',
-            'nomor_telepon' => 'nullable|numeric',
-        ]);
+            'alamat' => 'required',
+            'nomor_telpon' => 'required',
+        ],[
+            'nama_pelanggan.required' => 'Nama wajib di isi',
+            'alamat.required' => 'Alamat wajib di isi',
+            'nomor_telpon.required' => 'Nomor telepon wajib di isi',
+        ]); 
 
-        Pelanggan::create($request->all());
+        $pelanggan = [
+            'nama_pelanggan' => $request->nama_pelanggan,
+            'alamat' => $request->alamat,
+            'nomor_telpon' => $request->nomor_telpon
+        ];
 
-        return redirect()->route('pelanggan.index')
-            ->with('success', 'Pelanggan berhasil ditambahkan.');
+        // dd($pelanggan);
+        Pelanggan::create($pelanggan);
+        return redirect()->route('pelanggan.index')->with('success', 'Data Berhasil disimpan');
     }
 
-    public function show(Pelanggan $pelanggan)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        return view('pelanggan.show', compact('pelanggan'));
+        //
     }
 
-    public function edit(Pelanggan $pelanggan)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-        return view('pelanggan.edit', compact('pelanggan'));
+        //
     }
 
-    public function update(Request $request, Pelanggan $pelanggan)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
+        // VALIDASI UNTUK INPUT DATA PENGGUNA 
         $request->validate([
             'nama_pelanggan' => 'required',
-            'email' => 'required|email|unique:pelanggan,email,'.$pelanggan->id,
-            'nomor_telepon' => 'nullable|numeric',
-        ]);
+            'alamat' => 'required',
+            'nomor_telpon' => 'required'
+        ],[
+            'nama_pelanggan.required' => 'Nama wajib di isi',
+            'alamat.required' => 'Alamat wajib di isi',
+            'nomor_telpon.required' => 'Nomor telepon wajib di isi'
+        ]); 
 
-        $pelanggan->update($request->all());
+        $pelanggan = [
+            'nama_pelanggan' => $request->nama_pelanggan,
+            'alamat' => $request->alamat,
+            'nomor_telpon' => $request->nomor_telpon
+        ];
 
-        return redirect()->route('pelanggan.index')
-            ->with('success', 'Detail pelanggan berhasil diperbarui.');
+        Pelanggan::find($id)->update($pelanggan);
+        return redirect()->route('pelanggan.index')->with('success', 'Data Berhasil diedit');
     }
 
-    public function destroy(Pelanggan $pelanggan)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-        $pelanggan->delete();
+        Pelanggan::find($id)->delete();
+        return redirect()->route('pelanggan.index')->with('success', 'Data berhasil di hapus');
+    }
 
-        return redirect()->route('pelanggan.index')
-            ->with('success', 'Pelanggan berhasil dihapus.');
+    public function export_pdf() 
+    {
+        // mengurutkan sesuai abjad 
+        $pelanggan = Pelanggan::orderBy('nama_pelanggan', 'asc');
+        
+        $pelanggan = $pelanggan->get();
+
+        // Meneruskan parameter ke tampilan ekspor
+        $pdf = PDF::loadview('pelanggan.export_pdf', ['pelanggan'=>$pelanggan]);
+        $pdf->setPaper('a4', 'portrait');
+        $pdf->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+        // UNTUK MENENTUKAN NAMA FILE
+        $filename = date('YmdHis') . '_pelanggan';
+        // untuk mendownload file pdf
+        return $pdf->download($filename.'.pdf');
     }
 }

@@ -52,31 +52,19 @@ Route::get('/produk/{produk}/edit', [ProdukController::class, 'edit'])->name('pr
 Route::put('/produk/{id}', [ProdukController::class, 'update'])->name('produk.update');
 Route::delete('/produk/{produk}', [ProdukController::class, 'destroy'])->name('produk.destroy');
 
-// //Route Pelanggan
-// Route::resource('pelanggan', PelangganController::class);
-// Route::get('export_pdf_pelanggan',[PelangganController::class, 'export_pdf'])->name('export_pdf_pelanggan');
-Route::get('/pelanggan/index', [PelangganController::class,'create'])->name('pelanggan.index');
-Route::get('/pelanggan/create', [PelangganController::class,'create'])->name('pelanggan.create');
-Route::post('/pelanggan', [PelangganController::class,'store'])->name('pelanggan.store');
-Route::get('/pelanggan', [PelangganController::class,'create'])->name('pelanggan.index');
+// ROUTE PELANGGAN
+route::Resource('/pelanggan', PelangganController::class)->middleware('auth');
+route::get('/export_pdf_pelanggan', [PelangganController::class, 'export_pdf'])->name('export_pdf_pelanggan');
 
-//Route Detail Penjualan
+ // ROUTE DETAIL PENJUALAN
+ route::Resource('/detail_penjualan', DetailPenjualanController::class);
+ route::get('/export_excel_detpenjualan', [DetailPenjualanController::class, 'export_excel'])->name('export_excel_detpenjualan');
+ route::get('/export_pdf_detpenjualan', [DetailPenjualanController::class, 'export_pdf'])->name('export_pdf_detpenjualan');
 
-Route::get('/detail_penjualan', [DetailPenjualanController::class, 'index'])->name('detail_penjualan.index');
-Route::get('/detail_penjualan/create', [DetailPenjualanController::class, 'create'])->name('detail_penjualan.create');
-Route::post('/detail_penjualan', [DetailPenjualanController::class, 'store'])->name('detail_penjualan.store');
-Route::get('/detail_penjualan/{id}', [DetailPenjualanController::class, 'show'])->name('detail_penjualan.show');
-Route::get('/detail_penjualan/{id}/edit', [DetailPenjualanController::class, 'edit'])->name('detail_penjualan.edit');
-Route::put('/detail_penjualan/{id}', [DetailPenjualanController::class, 'update'])->name('detail_penjualan.update');
-Route::delete('/detail_penjualan/{id}', [DetailPenjualanController::class, 'destroy'])->name('detail_penjualan.destroy');
 
-//Route Penjualan
-Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
-Route::get('/penjualan/create', [PenjualanController::class, 'create'])->name('penjualan.create');
-Route::post('/penjualan', [PenjualanController::class, 'store'])->name('penjualan.store');
-Route::get('/penjualan/{penjualan}/edit', [PenjualanController::class, 'edit'])->name('penjualan.edit');
-Route::put('/penjualan/{penjualan}', [PenjualanController::class, 'update'])->name('penjualan.update');
-Route::delete('/penjualan/{penjualan}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
+route::Resource('/penjualan', PenjualanController::class);
+route::get('/export_pdf_penjualan', [PenjualanController::class, 'export_pdf'])->name('export_pdf_penjualan');
+route::get('/export_excel_penjualan', [PenjualanController::class, 'export_excel'])->name('export_excel_penjualan');
 
 
 
@@ -87,4 +75,4 @@ Route::get('export_excel_produk' ,[ProdukController::class, 'export_excel'])->na
 
 
 
-Route::resource('detail_penjualans', DetailPenjualanController::class);
+// Route::resource('detail_penjualan', DetailPenjualanController::class);

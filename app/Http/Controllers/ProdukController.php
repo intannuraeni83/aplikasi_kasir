@@ -49,7 +49,7 @@ class ProdukController extends Controller
     }
     public function export_Pdf()
     {
-        $produks = Produk::all();
+        $produk = Produk::all();
 
         // Inisialisasi objek Dompdf
         $pdf = new Dompdf();

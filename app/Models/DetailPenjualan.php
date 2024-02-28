@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\HashFormatRupiah;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DetailPenjualan extends Model
 {
     use HasFactory;
+   
 
+    protected $guarded = ['id'];
     protected $table = 'detail_penjualan';
 
-    // Definisikan relasi dengan penjualan dan produk
-    public function penjualan()
+    public function penjualan() 
     {
-        return $this->belongsTo(Penjualan::class);
+        return $this->BelongsTo(Penjualan::class);
     }
-
-    public function produk()
+    public function produk() 
     {
-        return $this->belongsTo(Produk::class);
+        return $this->BelongsTo(Produk::class);
     }
 }

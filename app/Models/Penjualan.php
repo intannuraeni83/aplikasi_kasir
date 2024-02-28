@@ -2,21 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\HashFormatRupiah;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Penjualan extends Model
 {
     use HasFactory;
-    protected $fillable = ['tanggal_penjualan', 'total_harga', 'pelanggan_id'];
 
-    public function detailPenjualans()
+
+    protected $guarded = ['id'];
+    protected $table = 'penjualan';
+
+    public function pelanggan() 
     {
-        return $this->hasMany(DetailPenjualan::class, 'penjualan_id');
+        return $this->BelongsTo(Pelanggan::class);
     }
 
-    public function pelanggan()
+    public function detailpenjualan() 
     {
-        return $this->belongsTo(Pelanggan::class);
+        return $this->hasMany(DetailPenjualan::class);
     }
 }

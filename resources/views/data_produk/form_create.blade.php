@@ -26,15 +26,7 @@
 								<div class="pd-30 pd-sm-40 bg-gray-100">
                                 <form action="{{ route('produk.store') }}" method="post">
                                     @csrf
-									<div class="row row-xs align-items-top mg-b-20">
-                                        <div class="col-md-3">
-                                            <label class="form-label mg-b-0">Foto </label>
-                                        </div>
-                                        <div class="col-md-9 mg-t-5 mg-md-t-0">
-                                            <input class="form-control" name="img" type="file">
-                                            <small><p class="text-muted">* File Extention .png/.jpg/.jpeg  | size image Max 2MB : (1125px x 792px) &nbsp;</p></small>
-                                        </div>
-                                    </div>    
+									 
                           
 									<div class="row row-xs align-items-center mg-b-20">
                                         <div class="col-md-3">

@@ -24,7 +24,7 @@
 									<--ROUTE CREATE PRODUK-->
 									<a href="{{ route('produk.create') }}" class="btn btn-primary">TAMBAH DATA</a>
 									<a href="{{ route('export_excel_produk') }}" class="btn btn-success">EXPORT EXCEL</a>
-									<a href="{{ route('export_pdf_produk') }}" class="btn btn-danger">EXPORT PDF</a>
+								
 								</div>
 								@include('_component.pesan')
 							</div>
@@ -34,7 +34,7 @@
 										<thead>
 											<tr>
 												<th>No</th>
-												<th>Foto</th>
+												
 												<th>Nama Porduk</th>
 												<th>Harga</th>
 												<th>Stok</th>
@@ -45,7 +45,7 @@
                                         @foreach ($produk as $dt)
 											<tr>
 												<th scope="row">{{$loop->iteration}}</th>
-												<td>{{ $dt->foto }}</td>
+												
 												<td>{{ $dt->nama_produk }}</td>
 												<td>{{ $dt->harga }}</td>
 												<td>{{ $dt->stok }}</td>
